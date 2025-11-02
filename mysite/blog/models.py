@@ -9,7 +9,7 @@ from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.snippets.models import register_snippet
 from taggit.models import TaggedItemBase
 from modelcluster.contrib.taggit import ClusterTaggableManager
-
+from wagtail.api import APIField
 class BlogIndexPage(Page):
     intro = RichTextField(blank=True)
     # add the get_context method:
@@ -45,7 +45,10 @@ class BlogPage(Page):
         "intro", "body",
         "gallery_images",
         ]
-
+    api_fields = [
+        APIField('date'),
+        APIField('authors'),  
+    ]
 class BlogPageGalleryImage(Orderable):
     page = ParentalKey(BlogPage, on_delete=models.CASCADE, related_name='gallery_images')
     image = models.ForeignKey(
@@ -82,3 +85,6 @@ class Author(models.Model):
 
     class Meta:
         verbose_name_plural = 'Authors'
+    api_fields = [
+        APIField('name'),
+    ]
