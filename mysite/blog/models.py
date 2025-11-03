@@ -48,6 +48,8 @@ class BlogPage(Page):
     api_fields = [
         APIField('date'),
         APIField('authors'),  
+        APIField('gallery_images'),
+        APIField('intro')
     ]
 class BlogPageGalleryImage(Orderable):
     page = ParentalKey(BlogPage, on_delete=models.CASCADE, related_name='gallery_images')
@@ -57,6 +59,9 @@ class BlogPageGalleryImage(Orderable):
     caption = models.CharField(blank=True, max_length=250)
 
     panels = ["image", "caption"]
+    api_fields = [
+        APIField('image')
+    ]
 class BlogTagIndexPage(Page):
 
     def get_context(self, request):
